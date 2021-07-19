@@ -1,5 +1,25 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const { app, BrowserWindow, ipcMain } = require('electron');
+
+const Model = require('./model');
+
+const db = new Model();
+ipcMain.on('add-entry', (event, date, content) => {
+  if (db.getEntry(date) === undefined) {
+    db.addEntry(content);
+  }
+});
+
+ipcMain.on('get-entry', (event, date) => {
+  event.returnValue = db.getEntry(date);
+});
+
+ipcMain.on('update-entry', (event, date, content) => {
+  event.returnValue = db.updateEntry(date, content);
+});
+
+ipcMain.on('get-all', (event) => {
+  event.returnValue = db.getAllEntries();
+});
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -45,6 +65,9 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+// Db closing
+app.on('exit', () => db.close());
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.

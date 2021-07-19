@@ -9,6 +9,8 @@ import styled from 'styled-components';
 
 import { getSentenceForCaret } from './utils';
 
+const { ipcRenderer } = window.require('electron');
+
 const StyledSlate = styled.div`
   background: #181818;
   height: 100vh;
@@ -32,14 +34,17 @@ const Leaf = ({ attributes, children, leaf }) => {
 };
 
 const MyEditor = () => {
+  const d = new Date();
+  const defaultDate = d.toISOString().substring(0, 10);
+  const entry = ipcRenderer.sendSync('get-entry', defaultDate);
+  let defaultContent;
+  if (entry) {
+    defaultContent = JSON.parse(entry.content);
+  }
   // Create a Slate editor object that won't change across renders.
   const [editor] = useState(() => withReact(createEditor()));
-
-  const [value, setValue] = useState(
-    JSON.parse(localStorage.getItem('content')) || [
-      { type: 'paragraph', children: [{ text: '' }] },
-    ],
-  );
+  const [value, setValue] = useState(defaultContent
+    || [{ type: 'paragraph', children: [{ text: '' }] }]);
 
   // Define a leaf rendering function that is memoized with `useCallback`.
   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -49,7 +54,13 @@ const MyEditor = () => {
   const onChange = (newValue) => {
     setValue(newValue);
     const content = JSON.stringify(newValue);
-    localStorage.setItem('content', content);
+    const date = new Date();
+    const dFormatted = date.toISOString().substring(0, 10);
+    if (ipcRenderer.sendSync('get-entry', dFormatted) !== undefined) {
+      ipcRenderer.sendSync('update-entry', dFormatted, content);
+    } else {
+      ipcRenderer.sendSync('add-entry', dFormatted, content);
+    }
   };
 
   const decorate = useCallback(
