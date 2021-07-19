@@ -7,8 +7,7 @@ export function sentenceTokenize(text) {
     .map((s) => ({ size: s.offset, text: s.text }));
 
   if (sentences.length !== 0) {
-    sentences[0].size.length =
-      sentences[0].size.start + sentences[0].size.length;
+    sentences[0].size.length = sentences[0].size.start + sentences[0].size.length;
     sentences[0].size.start = 0;
     if (sentences.length !== 1) {
       for (let i = 1; i < sentences.length;) {
@@ -49,7 +48,7 @@ export function getSentenceForCaret(text, cursor) {
 export function getSentencesForSelect(
   text,
   selectStart,
-  selectEnd
+  selectEnd,
 ) {
   // Get length of sentences with whitespace included
   const sentences = sentenceTokenize(text);

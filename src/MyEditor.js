@@ -38,14 +38,13 @@ const MyEditor = () => {
   const [value, setValue] = useState(
     JSON.parse(localStorage.getItem('content')) || [
       { type: 'paragraph', children: [{ text: '' }] },
-    ]
+    ],
   );
 
   // Define a leaf rendering function that is memoized with `useCallback`.
-  const renderLeaf = useCallback((props) => {
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    return <Leaf {...props} />;
-  }, []);
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  const renderLeaf = useCallback((props) => <Leaf {...props} />,
+    []);
 
   const onChange = (newValue) => {
     setValue(newValue);
@@ -63,7 +62,6 @@ const MyEditor = () => {
             return [];
           }
           const { start, end } = getSentenceForCaret(node.text, offset);
-          console.log(start, end)
           if (start !== 0 || end !== 0) {
             const currentSentence = {
               currentSentence: true,
@@ -76,7 +74,7 @@ const MyEditor = () => {
       }
       return [];
     },
-    [editor.selection]
+    [editor.selection],
   );
 
   return (
