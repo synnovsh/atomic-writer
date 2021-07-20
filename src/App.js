@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import EntryList from './EntryList';
-import MyEditor from './MyEditor';
-import { ThemeContext, themes } from './theme-context';
+import EntryList from './components/EntryList';
+import MyEditor from './components/MyEditor';
+import { ThemeContext, themes } from './utils/theme-context';
 
 const { ipcRenderer } = window.require('electron');
 

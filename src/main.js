@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 
-const Model = require('./model');
+const Model = require('./utils/model');
 
 const db = new Model();
 ipcMain.on('add-entry', (event, date, content) => {

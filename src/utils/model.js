@@ -34,8 +34,8 @@ class Model {
     this.getAllStmt = this.db.prepare(allByDateStr);
     this.updateStmt = this.db.prepare(updateStr);
 
-    //this.testStmt = this.db.prepare(testStr);
-    //this.addTestData();
+    // this.testStmt = this.db.prepare(testStr);
+    // this.addTestData();
   }
 
   addTestData() {

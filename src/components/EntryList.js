@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Node } from 'slate';
 import styled from 'styled-components';
-import { ThemeContext } from './theme-context';
+import { ThemeContext } from '../utils/theme-context';
 
 const { ipcRenderer } = window.require('electron');
 

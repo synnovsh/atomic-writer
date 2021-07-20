@@ -6,9 +6,9 @@ import { createEditor, Range, Text } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import styled from 'styled-components';
-import { ThemeContext } from './theme-context';
+import { ThemeContext } from '../utils/theme-context';
 
-import { getSentenceForCaret } from './utils';
+import { getSentenceForCaret } from '../utils/utils';
 
 const StyledSlate = styled.div`
   background: ${({ theme }) => theme.bg};
