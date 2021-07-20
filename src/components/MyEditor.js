@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 
 // Import the Slate editor factory.
 // and the Slate components and React plugin.
-import { createEditor, Range, Text } from 'slate';
-import { Slate, Editable, withReact } from 'slate-react';
+import { Range, Text } from 'slate';
+import { Slate, Editable } from 'slate-react';
 
 import styled from 'styled-components';
 import { ThemeContext } from '../utils/theme-context';
@@ -37,9 +37,7 @@ const Leaf = ({ attributes, children, leaf }) => {
   );
 };
 
-const MyEditor = ({ content, onContentChange }) => {
-  // Slate editor object that won't change across renders.
-  const [editor] = useState(() => withReact(createEditor()));
+const MyEditor = ({ content, onContentChange, editor }) => {
   // Define a leaf rendering function that is memoized with `useCallback`.
   // eslint-disable-next-line react/jsx-props-no-spreading
   const renderLeaf = useCallback((props) => <Leaf {...props} />,
@@ -69,7 +67,7 @@ const MyEditor = ({ content, onContentChange }) => {
       }
       return [];
     },
-    [editor.selection],
+    [],
   );
 
   return (

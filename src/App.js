@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
+import { createEditor } from 'slate';
+import { withReact } from 'slate-react';
+import { withHistory } from 'slate-history';
 import EntryList from './components/EntryList';
 import MyEditor from './components/MyEditor';
 import { ThemeContext, themes } from './utils/theme-context';
@@ -24,7 +27,14 @@ export default function App() {
 
   const [selectedDate, setSelectedDate] = useState(defaultDate);
 
+  // Slate editor object that won't change across renders.
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+
   const onChangeDate = (changedDate) => {
+    editor.history = {
+      redos: [],
+      undos: [],
+    };
     setSelectedDate(changedDate);
     const res = ipcRenderer.sendSync('get-entry', changedDate);
     setContent(JSON.parse(res.content));
@@ -54,7 +64,11 @@ export default function App() {
       <button type="button" onClick={toggleTheme}>Toggle theme</button>
       <StyledApp>
         <EntryList selectedDate={selectedDate} onChangeDate={onChangeDate} />
-        <MyEditor content={content} onContentChange={onContentChange} />
+        <MyEditor
+          content={content}
+          onContentChange={onContentChange}
+          editor={editor}
+        />
       </StyledApp>
     </ThemeContext.Provider>
   );
