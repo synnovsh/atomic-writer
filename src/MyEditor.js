@@ -14,7 +14,7 @@ const StyledSlate = styled.div`
   background: ${({ theme }) => theme.bg};
   font-size: 20px;
   font-family: 'Courier New';
-  caret-color: #00b1f3;
+  caret-color: ${({ theme }) => theme.common.accent};
   width: 100%;
 `;
 

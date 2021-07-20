@@ -22,15 +22,21 @@ export default function App() {
   const [content, setContent] = useState(defaultContent
     || [{ type: 'paragraph', children: [{ text: '' }] }]);
 
+  const [selectedDate, setSelectedDate] = useState(defaultDate);
+
+  const onChangeDate = (changedDate) => {
+    setSelectedDate(changedDate);
+    const res = ipcRenderer.sendSync('get-entry', changedDate);
+    setContent(JSON.parse(res.content));
+  };
+
   const onContentChange = (changedContent) => {
     setContent(changedContent);
     const contentString = JSON.stringify(changedContent);
-    const date = new Date();
-    const dFormatted = date.toISOString().substring(0, 10);
-    if (ipcRenderer.sendSync('get-entry', dFormatted) !== undefined) {
-      ipcRenderer.sendSync('update-entry', dFormatted, contentString);
+    if (ipcRenderer.sendSync('get-entry', selectedDate) !== undefined) {
+      ipcRenderer.sendSync('update-entry', selectedDate, contentString);
     } else {
-      ipcRenderer.sendSync('add-entry', dFormatted, contentString);
+      ipcRenderer.sendSync('add-entry', selectedDate, contentString);
     }
   };
 
@@ -47,7 +53,7 @@ export default function App() {
     <ThemeContext.Provider value={theme}>
       <button type="button" onClick={toggleTheme}>Toggle theme</button>
       <StyledApp>
-        <EntryList />
+        <EntryList selectedDate={selectedDate} onChangeDate={onChangeDate} />
         <MyEditor content={content} onContentChange={onContentChange} />
       </StyledApp>
     </ThemeContext.Provider>
