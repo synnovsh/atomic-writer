@@ -6,22 +6,22 @@ import { ThemeContext } from './theme-context';
 const { ipcRenderer } = window.require('electron');
 
 const StyledEntryItem = styled.li`
-  display: flex;
 `;
 
 const StyledList = styled.ol`
   color: ${({ theme }) => theme.text};
+  background: ${({ theme }) => theme.bg};
 `;
 
 const serialize = (nodes) => nodes.map((n) => Node.string(n)).join('\n');
 
 const EntryItem = ({ entry }) => {
   const { date, content } = entry;
-  const serializedContent = serialize(JSON.parse(content));
+  const serializedContent = `${serialize(JSON.parse(content)).substring(0, 50)}...`;
   return (
     <StyledEntryItem>
-      <div>{serializedContent}</div>
       <div>{date}</div>
+      <div>{serializedContent}</div>
     </StyledEntryItem>
   );
 };

@@ -17,6 +17,7 @@ const StyledSlate = styled.div`
   font-size: 20px;
   font-family: 'Courier New';
   caret-color: #00b1f3;
+  width: 100%;
 `;
 
 const StyledLeaf = styled.span`
