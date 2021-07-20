@@ -14,10 +14,14 @@ const StyledList = styled.ol`
 `;
 
 const serialize = (nodes) => nodes.map((n) => Node.string(n)).join('\n');
+const maxLength = 50;
 
 const EntryItem = ({ entry }) => {
   const { date, content } = entry;
-  const serializedContent = `${serialize(JSON.parse(content)).substring(0, 50)}...`;
+  let serializedContent = serialize(JSON.parse(content));
+  if (serializedContent.length > maxLength) {
+    serializedContent = `${serializedContent.substring(0, maxLength)}...`;
+  }
   return (
     <StyledEntryItem>
       <div>{date}</div>
