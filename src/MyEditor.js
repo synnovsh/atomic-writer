@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 
 // Import the Slate editor factory.
 // and the Slate components and React plugin.
@@ -6,28 +6,35 @@ import { createEditor, Range, Text } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 
 import styled from 'styled-components';
+import { ThemeContext } from './theme-context';
 
 import { getSentenceForCaret } from './utils';
 
 const { ipcRenderer } = window.require('electron');
 
 const StyledSlate = styled.div`
-  background: #181818;
+  background: ${({ theme }) => theme.bg};
   font-size: 20px;
   font-family: 'Courier New';
   caret-color: #00b1f3;
 `;
 
+const StyledLeaf = styled.span`
+  color: ${({ currentSentence, theme }) => (currentSentence ? theme.text : theme.mutedText)};
+`;
+
 const Leaf = ({ attributes, children, leaf }) => {
+  const theme = useContext(ThemeContext);
   const { 'data-slate-leaf': dataSlateLeaf } = attributes;
   const { currentSentence } = leaf;
   return (
-    <span
+    <StyledLeaf
       data-slate-leaf={dataSlateLeaf}
-      style={{ color: currentSentence ? '#ccc' : '#696868' }}
+      currentSentence={currentSentence}
+      theme={theme}
     >
       {children}
-    </span>
+    </StyledLeaf>
   );
 };
 
@@ -48,6 +55,8 @@ const MyEditor = () => {
   // eslint-disable-next-line react/jsx-props-no-spreading
   const renderLeaf = useCallback((props) => <Leaf {...props} />,
     []);
+
+  const theme = useContext(ThemeContext);
 
   const onChange = (newValue) => {
     setValue(newValue);
@@ -87,7 +96,7 @@ const MyEditor = () => {
   );
 
   return (
-    <StyledSlate>
+    <StyledSlate theme={theme}>
       <Slate
         editor={editor}
         value={value}

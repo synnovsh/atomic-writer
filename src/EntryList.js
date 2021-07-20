@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Node } from 'slate';
 import styled from 'styled-components';
+import { ThemeContext } from './theme-context';
 
 const { ipcRenderer } = window.require('electron');
 
 const StyledEntryItem = styled.li`
-display: flex;
+  display: flex;
 `;
 
 const StyledList = styled.ol`
-color: #ccc;
+  color: ${({ theme }) => theme.text};
 `;
 
 const serialize = (nodes) => nodes.map((n) => Node.string(n)).join('\n');
@@ -28,8 +29,9 @@ const EntryItem = ({ entry }) => {
 const EntryList = () => {
   const allEntries = ipcRenderer.sendSync('get-all');
   const items = allEntries.map((entry) => <EntryItem key={entry.date} entry={entry} />);
+  const theme = useContext(ThemeContext);
   return (
-    <StyledList>
+    <StyledList theme={theme}>
       {items}
     </StyledList>
   );
