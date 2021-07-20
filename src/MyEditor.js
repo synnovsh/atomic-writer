@@ -13,8 +13,6 @@ const { ipcRenderer } = window.require('electron');
 
 const StyledSlate = styled.div`
   background: #181818;
-  height: 100vh;
-  width: 100vw;
   font-size: 20px;
   font-family: 'Courier New';
   caret-color: #00b1f3;
