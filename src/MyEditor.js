@@ -10,8 +10,6 @@ import { ThemeContext } from './theme-context';
 
 import { getSentenceForCaret } from './utils';
 
-const { ipcRenderer } = window.require('electron');
-
 const StyledSlate = styled.div`
   background: ${({ theme }) => theme.bg};
   font-size: 20px;
@@ -39,37 +37,15 @@ const Leaf = ({ attributes, children, leaf }) => {
   );
 };
 
-const MyEditor = () => {
-  const d = new Date();
-  const defaultDate = d.toISOString().substring(0, 10);
-  const entry = ipcRenderer.sendSync('get-entry', defaultDate);
-  let defaultContent;
-  if (entry) {
-    defaultContent = JSON.parse(entry.content);
-  }
-  // Create a Slate editor object that won't change across renders.
+const MyEditor = ({ content, onContentChange }) => {
+  // Slate editor object that won't change across renders.
   const [editor] = useState(() => withReact(createEditor()));
-  const [value, setValue] = useState(defaultContent
-    || [{ type: 'paragraph', children: [{ text: '' }] }]);
-
   // Define a leaf rendering function that is memoized with `useCallback`.
   // eslint-disable-next-line react/jsx-props-no-spreading
   const renderLeaf = useCallback((props) => <Leaf {...props} />,
     []);
 
   const theme = useContext(ThemeContext);
-
-  const onChange = (newValue) => {
-    setValue(newValue);
-    const content = JSON.stringify(newValue);
-    const date = new Date();
-    const dFormatted = date.toISOString().substring(0, 10);
-    if (ipcRenderer.sendSync('get-entry', dFormatted) !== undefined) {
-      ipcRenderer.sendSync('update-entry', dFormatted, content);
-    } else {
-      ipcRenderer.sendSync('add-entry', dFormatted, content);
-    }
-  };
 
   const decorate = useCallback(
     ([node, path]) => {
@@ -100,8 +76,8 @@ const MyEditor = () => {
     <StyledSlate theme={theme}>
       <Slate
         editor={editor}
-        value={value}
-        onChange={(newValue) => onChange(newValue)}
+        value={content}
+        onChange={(newContent) => onContentChange(newContent)}
       >
         <Editable decorate={decorate} renderLeaf={renderLeaf} />
       </Slate>
