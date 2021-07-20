@@ -7,14 +7,16 @@ const common = {
 export const themes = {
   dark: {
     text: '#ccc',
-    mutedText: '#696868',
-    bg: '#181818',
+    mutedText: '#707070',
+    bg: '#1B1B1B',
+    bgAccent: '#151515',
     common,
   },
   light: {
     text: '#222',
     mutedText: '#ccc',
-    bg: '#fafafa',
+    bg: '#F7F7F7',
+    bgAccent: 'FCFCFC',
     common,
   },
 };

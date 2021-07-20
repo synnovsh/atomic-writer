@@ -6,12 +6,11 @@ import { ThemeContext } from '../utils/theme-context';
 const { ipcRenderer } = window.require('electron');
 
 const StyledEntryItem = styled.li`
-border-left: ${({ selected, theme }) => (selected ? `2px solid ${theme.common.accent}` : '')};
-`;
+  border-left: ${({ selected, theme }) => (selected ? `2px solid ${theme.common.accent}` : '')};
+  `;
 
 const StyledList = styled.ol`
   color: ${({ theme }) => theme.text};
-  background: ${({ theme }) => theme.bg};
 `;
 
 const serialize = (nodes) => nodes.map((n) => Node.string(n)).join('\n');
@@ -20,14 +19,16 @@ const maxLength = 50;
 const EntryItem = ({ entry, selected, onChangeDate }) => {
   const { date, content } = entry;
   const theme = useContext(ThemeContext);
-  let serializedContent = serialize(JSON.parse(content));
-  if (serializedContent.length > maxLength) {
-    serializedContent = `${serializedContent.substring(0, maxLength)}...`;
+  let listBlurb = serialize(JSON.parse(content));
+  if (listBlurb.length > maxLength) {
+    listBlurb = `${listBlurb.substring(0, maxLength)}...`;
+  } else if (listBlurb.length === 0) {
+    listBlurb = 'Empty Document';
   }
   return (
     <StyledEntryItem theme={theme} selected={selected} onClick={() => onChangeDate(date)}>
       <div>{date}</div>
-      <div>{serializedContent}</div>
+      <div>{listBlurb}</div>
     </StyledEntryItem>
   );
 };

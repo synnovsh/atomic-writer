@@ -10,7 +10,27 @@ import { ThemeContext, themes } from './utils/theme-context';
 const { ipcRenderer } = window.require('electron');
 
 const StyledApp = styled.div`
-  display: flex;
+  height: 100vh;
+  background: ${({ theme }) => theme.bg};
+`;
+
+const EditorWrapper = styled.div`
+  margin-left: ${({ navOpen }) => (navOpen ? '320px' : '0px')};
+  transition: 0.3s ease-in-out;
+`;
+
+const StyledNavContainer = styled.div` 
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  width: 320px;
+  ${({ navOpen }) => (!navOpen && 'transform: translateX(-320px)')};
+  overflow-x: hidden; /* prevent width 0 from containing overflow */
+  top: 0;
+  left: 0;
+  transition: 0.3s ease-in-out;
+  background: ${({ theme }) => theme.bgAccent};
+  
 `;
 
 export default function App() {
@@ -50,7 +70,6 @@ export default function App() {
     }
   };
 
-  // Create a
   /* The ThemeContext defaultValue argument is only used when a component does not have
   a matching Provider above it in the tree. */
   const [theme, setTheme] = useState(themes.dark);
@@ -59,16 +78,26 @@ export default function App() {
     setTheme(theme === themes.dark ? themes.light : themes.dark);
   };
 
+  const [navOpen, setNavOpen] = useState(false);
+
   return (
     <ThemeContext.Provider value={theme}>
-      <button type="button" onClick={toggleTheme}>Toggle theme</button>
-      <StyledApp>
-        <EntryList selectedDate={selectedDate} onChangeDate={onChangeDate} />
-        <MyEditor
-          content={content}
-          onContentChange={onContentChange}
-          editor={editor}
-        />
+      <StyledApp theme={theme}>
+        <button type="button" onClick={() => setNavOpen(true)}>Open nav</button>
+        <button type="button" onClick={toggleTheme}>Toggle theme</button>
+        <StyledNavContainer theme={theme} navOpen={navOpen}>
+          <nav>
+            <button type="button" onClick={() => setNavOpen(false)}>Close nav</button>
+            <EntryList selectedDate={selectedDate} onChangeDate={onChangeDate} />
+          </nav>
+        </StyledNavContainer>
+        <EditorWrapper theme={theme} navOpen={navOpen}>
+          <MyEditor
+            content={content}
+            onContentChange={onContentChange}
+            editor={editor}
+          />
+        </EditorWrapper>
       </StyledApp>
     </ThemeContext.Provider>
   );
