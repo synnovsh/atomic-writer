@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
-import { createEditor } from 'slate';
-import { withReact } from 'slate-react';
+import { createEditor, Transforms, Editor } from 'slate';
+import { withReact, ReactEditor } from 'slate-react';
 import { withHistory } from 'slate-history';
 import EntryList from './components/EntryList';
 import MyEditor from './components/MyEditor';
@@ -50,18 +50,29 @@ export default function App() {
   // Slate editor object that won't change across renders.
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
+  useEffect(() => {
+    ReactEditor.focus(editor);
+    Transforms.select(editor, Editor.end(editor, []));
+  }, []);
+
   const onChangeDate = (changedDate) => {
+    setSelectedDate(changedDate);
+    const res = ipcRenderer.sendSync('get-entry', changedDate);
+    setContent(JSON.parse(res.content));
+
+    // https://github.com/ianstormtaylor/slate/issues/3813#issuecomment-668464683
+
+
     editor.history = {
       redos: [],
       undos: [],
     };
-    setSelectedDate(changedDate);
-    const res = ipcRenderer.sendSync('get-entry', changedDate);
-    setContent(JSON.parse(res.content));
   };
 
   const onContentChange = (changedContent) => {
     setContent(changedContent);
+    ReactEditor.focus(editor);
+
     const contentString = JSON.stringify(changedContent);
     if (ipcRenderer.sendSync('get-entry', selectedDate) !== undefined) {
       ipcRenderer.sendSync('update-entry', selectedDate, contentString);
