@@ -15,11 +15,12 @@ const StyledApp = styled.div`
   min-height: 100vh;
   background: ${({ theme }) => theme.bg};
   font: ${({ theme }) => theme.common.defaultFont};
+  transition: background-color ${({ theme }) => theme.common.transition};
 `;
 
 const EditorWrapper = styled.div`
   margin-left: ${({ navOpen }) => (navOpen ? '320px' : '0px')};
-  transition: margin-left 0.3s ease-in-out;
+  transition: margin-left ${({ theme }) => theme.common.transition};
 `;
 
 export default function App() {

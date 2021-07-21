@@ -11,15 +11,19 @@ const StyledEntryItem = styled.li`
   min-height: 4em;
   .blurb {
     color: ${({ theme }) => theme.mutedText};
+    transition: color ${({ theme }) => theme.common.transition};
   }
 
   .date {
     color: ${({ theme }) => theme.text};
+    transition: color ${({ theme }) => theme.common.transition};
   }
   padding: 10px;
   border-bottom: 1px solid ${({ theme }) => theme.border};
+  transition: 
+    background-color ${({ theme }) => theme.common.transition},
+    border-bottom ${({ theme }) => theme.common.transition};
 `;
-
 const StyledList = styled.ol`
 `;
 

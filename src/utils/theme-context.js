@@ -7,6 +7,8 @@ const common = {
   accent: '#00b1f3',
   defaultFont: "12px 'open sans', sans-serif",
   editorFont: "1.4em/2em 'roboto mono', monospace",
+  transition: '0.3s ease-in-out',
+  fastTransition: '0.1s ease-in-out',
 };
 
 export const themes = {

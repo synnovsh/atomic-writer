@@ -14,8 +14,10 @@ const StyledNavContainer = styled.div`
   overflow-x: hidden; /* prevent width 0 from containing overflow */
   top: 0;
   left: 0;
-  transition: transform 0.3s ease-in-out;
   background: ${({ theme }) => theme.bgAccent};
+  transition:
+    transform ${({ theme }) => theme.common.transition},
+    background-color ${({ theme }) => theme.common.transition};
 `;
 
 export const StyledButton = styled.button` 
@@ -24,7 +26,8 @@ export const StyledButton = styled.button`
     color: ${({ theme }) => theme.text};
     padding: 12px 16px;
     font-size: 16px; 
-    cursor: pointer; 
+    cursor: pointer;
+    transition: color ${({ theme }) => theme.common.transition}
 `;
 
 const Nav = ({
