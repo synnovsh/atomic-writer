@@ -12,11 +12,10 @@ import { getSentenceForCaret } from '../utils/utils';
 
 const StyledSlate = styled.div`
   display: grid;
-  grid-template-columns:
-  minmax(1.2rem, 1fr)
-  minmax(auto, 57ch)
-  minmax(1.2rem, 1fr);
-
+  grid-template-columns: 
+  minmax(20px, auto) 
+  minmax(0px, 800px) 
+  minmax(20px, auto);
   font-size: 20px;
   font: ${({ theme }) => theme.common.editorFont};
   caret-color: ${({ theme }) => theme.common.accent};
