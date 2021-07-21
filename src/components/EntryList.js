@@ -45,18 +45,22 @@ const EntryItem = ({ entry, selected, onChangeDate }) => {
 
 const EntryList = ({ selectedDate, onChangeDate }) => {
   const allEntries = ipcRenderer.sendSync('get-all');
-  const items = allEntries.map((entry) => (
-    <EntryItem
-      key={entry.date}
-      entry={entry}
-      selected={entry.date === selectedDate}
-      onChangeDate={onChangeDate}
-    />
-  ));
+  let items = 'Write something!';
+  if (allEntries !== null) {
+    items = allEntries.map((entry) => (
+      <EntryItem
+        key={entry.date}
+        entry={entry}
+        selected={entry.date === selectedDate}
+        onChangeDate={onChangeDate}
+      />
+    ));
+  }
+
   const theme = useContext(ThemeContext);
   return (
     <StyledList selectedDate={selectedDate} theme={theme}>
-      {items.length > 0 ? items : 'Write something!'}
+      {items}
     </StyledList>
   );
 };
