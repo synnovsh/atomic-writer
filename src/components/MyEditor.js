@@ -11,10 +11,21 @@ import { ThemeContext } from '../utils/theme-context';
 import { getSentenceForCaret } from '../utils/utils';
 
 const StyledSlate = styled.div`
+  display: grid;
+  grid-template-columns:
+  minmax(1.2rem, 1fr)
+  minmax(auto, 57ch)
+  minmax(1.2rem, 1fr);
+
+
   font-size: 20px;
   font-family: 'Courier New';
   caret-color: ${({ theme }) => theme.common.accent};
   width: 100%;
+
+  #gridWrapper {
+    grid-column: 2;
+  }
 `;
 
 const StyledLeaf = styled.span`
@@ -71,13 +82,15 @@ const MyEditor = ({ content, onContentChange, editor }) => {
 
   return (
     <StyledSlate theme={theme}>
-      <Slate
-        editor={editor}
-        value={content}
-        onChange={(newContent) => onContentChange(newContent)}
-      >
-        <Editable decorate={decorate} renderLeaf={renderLeaf} />
-      </Slate>
+      <div id="gridWrapper">
+        <Slate
+          editor={editor}
+          value={content}
+          onChange={(newContent) => onContentChange(newContent)}
+        >
+          <Editable decorate={decorate} renderLeaf={renderLeaf} />
+        </Slate>
+      </div>
     </StyledSlate>
   );
 };

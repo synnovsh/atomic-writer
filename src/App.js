@@ -61,7 +61,10 @@ export default function App() {
     setContent(JSON.parse(res.content));
 
     // https://github.com/ianstormtaylor/slate/issues/3813#issuecomment-668464683
-
+    setTimeout(() => {
+      ReactEditor.focus(editor);
+      Transforms.select(editor, Editor.end(editor, []));
+    }, 0);
 
     editor.history = {
       redos: [],
@@ -89,7 +92,7 @@ export default function App() {
     setTheme(theme === themes.dark ? themes.light : themes.dark);
   };
 
-  const [navOpen, setNavOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(true);
 
   return (
     <ThemeContext.Provider value={theme}>

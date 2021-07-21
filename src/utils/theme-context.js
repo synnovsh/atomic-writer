@@ -10,13 +10,15 @@ export const themes = {
     mutedText: '#707070',
     bg: '#1B1B1B',
     bgAccent: '#151515',
+    border: '#1F1F1F',
     common,
   },
   light: {
     text: '#222',
-    mutedText: '#ccc',
+    mutedText: '#B5B5B5',
     bg: '#F7F7F7',
-    bgAccent: 'FCFCFC',
+    bgAccent: '#FCFCFC',
+    border: '#F0F0F0',
     common,
   },
 };

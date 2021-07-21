@@ -7,10 +7,18 @@ const { ipcRenderer } = window.require('electron');
 
 const StyledEntryItem = styled.li`
   border-left: ${({ selected, theme }) => (selected ? `2px solid ${theme.common.accent}` : '')};
-  `;
+  .blurb {
+    color: ${({ theme }) => theme.mutedText};
+  }
+
+  .date {
+    color: ${({ theme }) => theme.text};
+  }
+  padding: 10px;
+  border-bottom: 1px solid ${({ theme }) => theme.border};
+`;
 
 const StyledList = styled.ol`
-  color: ${({ theme }) => theme.text};
 `;
 
 const serialize = (nodes) => nodes.map((n) => Node.string(n)).join('\n');
@@ -27,8 +35,8 @@ const EntryItem = ({ entry, selected, onChangeDate }) => {
   }
   return (
     <StyledEntryItem theme={theme} selected={selected} onClick={() => onChangeDate(date)}>
-      <div>{date}</div>
-      <div>{listBlurb}</div>
+      <div className="date">{date}</div>
+      <div className="blurb">{listBlurb}</div>
     </StyledEntryItem>
   );
 };
