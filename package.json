@@ -91,6 +91,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
     "slate": "^0.63.0",
     "slate-history": "^0.62.0",
     "slate-react": "^0.65.2",

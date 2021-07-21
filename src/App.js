@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { createEditor, Transforms, Editor } from 'slate';
 import { withReact, ReactEditor } from 'slate-react';
 import { withHistory } from 'slate-history';
-import EntryList from './components/EntryList';
+import { HiOutlineMenuAlt2 } from 'react-icons/hi';
+
+import Nav, { StyledButton } from './components/Nav';
 import MyEditor from './components/MyEditor';
 import { ThemeContext, themes } from './utils/theme-context';
 
@@ -17,21 +19,7 @@ const StyledApp = styled.div`
 
 const EditorWrapper = styled.div`
   margin-left: ${({ navOpen }) => (navOpen ? '320px' : '0px')};
-  transition: 0.3s ease-in-out;
-`;
-
-const StyledNavContainer = styled.div` 
-  position: fixed;
-  z-index: 1;
-  height: 100%;
-  width: 320px;
-  ${({ navOpen }) => (!navOpen && 'transform: translateX(-320px)')};
-  overflow-x: hidden; /* prevent width 0 from containing overflow */
-  top: 0;
-  left: 0;
-  transition: 0.3s ease-in-out;
-  background: ${({ theme }) => theme.bgAccent};
-  
+  transition: margin-left 0.3s ease-in-out;
 `;
 
 export default function App() {
@@ -98,14 +86,14 @@ export default function App() {
   return (
     <ThemeContext.Provider value={theme}>
       <StyledApp theme={theme}>
-        <button type="button" onClick={() => setNavOpen(true)}>Open nav</button>
-        <button type="button" onClick={toggleTheme}>Toggle theme</button>
-        <StyledNavContainer theme={theme} navOpen={navOpen}>
-          <nav>
-            <button type="button" onClick={() => setNavOpen(false)}>Close nav</button>
-            <EntryList selectedDate={selectedDate} onChangeDate={onChangeDate} />
-          </nav>
-        </StyledNavContainer>
+        <StyledButton theme={theme} type="button" onClick={() => setNavOpen(true)}><HiOutlineMenuAlt2 /></StyledButton>
+        <Nav
+          navOpen={navOpen}
+          setNavOpen={setNavOpen}
+          toggleTheme={toggleTheme}
+          selectedDate={selectedDate}
+          onChangeDate={onChangeDate}
+        />
         <EditorWrapper theme={theme} navOpen={navOpen}>
           <MyEditor
             content={content}
