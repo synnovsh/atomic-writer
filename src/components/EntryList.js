@@ -6,8 +6,9 @@ import { ThemeContext } from '../utils/theme-context';
 const { ipcRenderer } = window.require('electron');
 
 const StyledEntryItem = styled.li`
-  border-left: ${({ selected, theme }) => (selected ? `2px solid ${theme.common.accent}` : '')};
-  margin-left: ${({ selected }) => (!selected && '2px')};
+  border-left: ${({ selected, theme }) => (selected ? `4px solid ${theme.common.accent}` : '')};
+  margin-left: ${({ selected }) => (!selected && '4px')};
+  min-height: 4em;
   .blurb {
     color: ${({ theme }) => theme.mutedText};
   }
