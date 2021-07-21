@@ -1,3 +1,5 @@
+import MenuBuilder from './menu';
+
 const { app, BrowserWindow, ipcMain } = require('electron');
 
 const Model = require('./utils/model');
@@ -36,6 +38,9 @@ const createWindow = () => {
       contextIsolation: false,
     },
   });
+
+  const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilder.buildMenu();
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
