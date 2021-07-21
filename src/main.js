@@ -37,6 +37,7 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
     },
+    show: false,
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
@@ -45,6 +46,10 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
+
   if (
     process.env.NODE_ENV === 'development'
     || process.env.DEBUG_PROD === 'true'
@@ -52,7 +57,6 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 };
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
