@@ -93,7 +93,7 @@ export default function App() {
     setTheme(theme === themes.dark ? themes.light : themes.dark);
   };
 
-  const [navOpen, setNavOpen] = useState(true);
+  const [navOpen, setNavOpen] = useState(false);
 
   return (
     <ThemeContext.Provider value={theme}>

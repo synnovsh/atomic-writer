@@ -56,7 +56,7 @@ const EntryList = ({ selectedDate, onChangeDate }) => {
   const theme = useContext(ThemeContext);
   return (
     <StyledList selectedDate={selectedDate} theme={theme}>
-      {items}
+      {items.length > 0 ? items : 'Write something!'}
     </StyledList>
   );
 };
