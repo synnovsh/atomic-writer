@@ -1,7 +1,10 @@
 # Atomic Journal
 
 * [Slate](https://github.com/ianstormtaylor/slate)
+* [Compromise](https://github.com/spencermountain/compromise/)
 * [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3)
+* [Fonts](https://github.com/fontsource/fontsource)
+
 
 ## Install and run
 
