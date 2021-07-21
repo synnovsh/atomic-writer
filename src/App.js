@@ -10,7 +10,7 @@ import { ThemeContext, themes } from './utils/theme-context';
 const { ipcRenderer } = window.require('electron');
 
 const StyledApp = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   background: ${({ theme }) => theme.bg};
   font: ${({ theme }) => theme.common.defaultFont};
 `;

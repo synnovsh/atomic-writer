@@ -12,10 +12,17 @@ import { getSentenceForCaret } from '../utils/utils';
 
 const StyledSlate = styled.div`
   display: grid;
+  
   grid-template-columns: 
-  minmax(20px, auto) 
-  minmax(0px, 800px) 
-  minmax(20px, auto);
+    minmax(20px, auto) 
+    minmax(0px, 700px) 
+    minmax(20px, auto);
+  
+  grid-template-rows: 
+    minmax(40px, auto) 
+    auto 
+    minmax(40px, auto);
+  
   font-size: 20px;
   font: ${({ theme }) => theme.common.editorFont};
   caret-color: ${({ theme }) => theme.common.accent};
@@ -23,6 +30,7 @@ const StyledSlate = styled.div`
 
   #gridWrapper {
     grid-column: 2;
+    grid-row: 2;
   }
 `;
 
