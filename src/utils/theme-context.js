@@ -1,7 +1,12 @@
 import React from 'react';
 
+import '@fontsource/roboto-mono';
+import '@fontsource/open-sans';
+
 const common = {
   accent: '#00b1f3',
+  defaultFont: "12px 'open sans', sans-serif",
+  editorFont: "1.4em/1.8em 'roboto mono', monospace",
 };
 
 export const themes = {

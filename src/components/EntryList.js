@@ -7,6 +7,7 @@ const { ipcRenderer } = window.require('electron');
 
 const StyledEntryItem = styled.li`
   border-left: ${({ selected, theme }) => (selected ? `2px solid ${theme.common.accent}` : '')};
+  margin-left: ${({ selected }) => (!selected && '2px')};
   .blurb {
     color: ${({ theme }) => theme.mutedText};
   }

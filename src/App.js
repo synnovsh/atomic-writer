@@ -12,6 +12,7 @@ const { ipcRenderer } = window.require('electron');
 const StyledApp = styled.div`
   height: 100vh;
   background: ${({ theme }) => theme.bg};
+  font: ${({ theme }) => theme.common.defaultFont};
 `;
 
 const EditorWrapper = styled.div`

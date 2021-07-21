@@ -17,9 +17,8 @@ const StyledSlate = styled.div`
   minmax(auto, 57ch)
   minmax(1.2rem, 1fr);
 
-
   font-size: 20px;
-  font-family: 'Courier New';
+  font: ${({ theme }) => theme.common.editorFont};
   caret-color: ${({ theme }) => theme.common.accent};
   width: 100%;
 
